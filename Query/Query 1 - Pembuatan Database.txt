@@ -1,0 +1,38 @@
+-- 1. Membuat Database Baru bernama Nusantara_Retail_DW
+CREATE DATABASE Nusantara_Retail_DW;
+GO
+
+-- Mengaktifkan database agar kueri di bawah masuk ke sini
+USE Nusantara_Retail_DW;
+GO
+
+-- 2. Membuat Tabel Dimensi Pelanggan (DimCustomer)
+CREATE TABLE DimCustomer (
+    CustomerID VARCHAR(50) PRIMARY KEY,
+    CustomerName VARCHAR(150),
+    Segment VARCHAR(50),
+    City VARCHAR(100),
+    State VARCHAR(100),
+    Country VARCHAR(100)
+);
+
+-- 3. Membuat Tabel Dimensi Produk (DimProduct)
+CREATE TABLE DimProduct (
+    ProductID VARCHAR(50) PRIMARY KEY,
+    Category VARCHAR(100),
+    SubCategory VARCHAR(100),
+    ProductName VARCHAR(255)
+);
+
+-- 4. Membuat Tabel Fakta Penjualan (FactSales)
+CREATE TABLE FactSales (
+    RowID INT PRIMARY KEY,
+    OrderID VARCHAR(50),
+    OrderDate DATE,
+    ShipDate DATE,
+    ShipMode VARCHAR(50),
+    CustomerID VARCHAR(50) FOREIGN KEY REFERENCES DimCustomer(CustomerID),
+    ProductID VARCHAR(50) FOREIGN KEY REFERENCES DimProduct(ProductID),
+    SalesAmount DECIMAL(18,2)
+);
+GO
